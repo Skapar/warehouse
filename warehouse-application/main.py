@@ -7,9 +7,12 @@ from core.config import settings
 
 from api import router as api_router
 from core.models import db_helper
+from core.models import Base
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    async with db_helper.engine.begin() as conn:
+        await conn.run_sync(Base.metada.drop_all)
     yield
     print("dispose engine")
     db_helper.dispose()
