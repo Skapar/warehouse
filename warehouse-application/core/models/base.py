@@ -16,5 +16,5 @@ class Base(DeclarativeBase):
 class User(Base):
     pass
 
-class Cherry:
-    pass
+# class Cherry:
+#     pass
