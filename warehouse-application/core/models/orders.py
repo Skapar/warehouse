@@ -13,7 +13,6 @@ from sqlalchemy import (
 class Order(Base):
     status: Mapped[str] = mapped_column(
         String(50),
-        CheckConstraint("status IN ('in_process', 'shipped', 'delivered')"),
         nullable=False,
     )
     user_id: Mapped[int] = mapped_column(
