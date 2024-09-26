@@ -16,7 +16,7 @@ class User(Base):
     email: Mapped[str] = mapped_column(String(255), nullable=False, unique=True)
     password: Mapped[str] = mapped_column(String(255), nullable=False)
 
-    role_id: Mapped[int] = mapped_column(Integer, ForeignKey("role.id"))
+    role_id: Mapped[int] = mapped_column(Integer, ForeignKey("roles.id"))
     role: Mapped["Role"] = relationship("Role")
 
     created_at: Mapped[DateTime] = mapped_column(
