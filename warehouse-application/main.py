@@ -23,7 +23,7 @@ main_app = FastAPI(
 )
 main_app.include_router(
     api_router,
-    prefix=settings.api.prefix,
+    prefix=settings.api.v1.prefix,
 )
 
 if __name__ == "__main__":

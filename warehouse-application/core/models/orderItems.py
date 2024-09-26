@@ -1,15 +1,12 @@
 from .base import Base
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy import (
-    String,
     ForeignKey,
     Integer,
-    Column,
-    DECIMAL,
     DateTime,
     func,
-    CheckConstraint,
 )
+
 
 class OrderItem(Base):
     order_id: Mapped[int] = mapped_column(

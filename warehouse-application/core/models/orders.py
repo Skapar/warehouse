@@ -4,12 +4,11 @@ from sqlalchemy import (
     String,
     ForeignKey,
     Integer,
-    Column,
-    DECIMAL,
     DateTime,
     func,
     CheckConstraint,
 )
+
 
 class Order(Base):
     status: Mapped[str] = mapped_column(

@@ -1,15 +1,13 @@
 from .base import Base
-from sqlalchemy.orm import relationship, Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import (
     String,
-    ForeignKey,
     Integer,
-    Column,
     DECIMAL,
     DateTime,
     func,
-    CheckConstraint,
 )
+
 
 class Product(Base):
     name: Mapped[str] = mapped_column(String(255), nullable=False)
