@@ -13,15 +13,7 @@ from sqlalchemy import (
 
 class Role(Base):
     title: Mapped[str] = mapped_column(unique=True)
-
-    # user_roles: Mapped[list["UserRole"]] = relationship(
-    #     "UserRole", back_populates="role"
-    # )
-
-    # users: Mapped[list["User"]] = relationship(
-    #     "User", secondary="user_roles", back_populates="roles"
-    # )
-
+    
     created_at: Mapped[DateTime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )
