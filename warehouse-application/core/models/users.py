@@ -8,8 +8,6 @@ from sqlalchemy import (
     func,
 )
 
-from .roles import Role
-
 
 class User(Base):
     name: Mapped[str] = mapped_column(String(255), nullable=False)

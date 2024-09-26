@@ -1,8 +1,8 @@
-"""Initial Role Table
+"""initital roles table
 
-Revision ID: be908e6dc993
+Revision ID: 622384f46098
 Revises: 
-Create Date: 2024-09-27 04:33:33.788315
+Create Date: 2024-09-27 04:54:04.216426
 
 """
 
@@ -13,7 +13,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = "be908e6dc993"
+revision: str = "622384f46098"
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
