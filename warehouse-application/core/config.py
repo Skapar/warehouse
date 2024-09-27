@@ -14,6 +14,8 @@ class ApiV1Prefix(BaseModel):
     prefix: str = "/v1"
     users: str = "/users"
     roles: str = "/roles"
+    products: str = "/products"
+
 
 
 class ApiPrefix(BaseModel):
