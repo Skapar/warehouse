@@ -16,5 +16,5 @@ async def create_role(
     session.add(role)
     await session.commit()
     await session.refresh(role)
-    
+
     return role
