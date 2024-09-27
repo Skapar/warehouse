@@ -1,21 +1,23 @@
-FROM python:3.12.6
+FROM python:3.12-slim
 
 WORKDIR /app
 
-COPY requirements.txt .
-
-RUN pip install --no-cache-dir -r requirements.txt
-
 COPY pyproject.toml poetry.lock ./
 
-RUN poetry install --no-root --no-dev
+RUN apt-get update && apt-get install -y make
 
-RUN warehouse-application/alembic revision --autogenerate -m 'initial'
+RUN pip install --upgrade pip \
+    && pip install poetry
 
-RUN warehouse-application/alembic upgrade head
+RUN poetry config virtualenvs.create false
 
-COPY . .
+# Install the dependencies
+RUN poetry install --no-dev
+
+COPY ./warehouse-application ./warehouse-application
+
+WORKDIR /app/warehouse-application
 
 EXPOSE 8000
 
-CMD ["python", "warehouse-application/main.py"]
+CMD ["python", "main.py"]

@@ -1,17 +1,24 @@
-.PHONY: all
-all: help
+.PHONY: all run tests lint
 
-.PHONY: build
+WORDDIR=.
+BLACKFLAGS=--target-version=py312
+
+all: run tests lint
+
+# tests:
+# 	@echo "Running tests..."
+# 	@poetry run pytest $(WORDDIR)/tests
+
 build:
-	docker-compose up --build
+	@echo "Building all Docker images using Docker Compose..."
+	@docker-compose build
+	@echo "All Docker images built successfully"
 
+run:
+	@echo "Starting server..."
+	@docker-compose up
 
-.PHONY: up
-up:
-	docker-compose up -d
-
-.PHONY: help
-help:
-	@echo "Makefile commands:"
-	@echo "  make build - Build the Docker images"
-	@echo "  make up    - Start the services in detached mode"
+lint:
+	@echo "Linting..."
+	@poetry run black $(WORDDIR) $(BLACKFLAGS)
+	@echo "Linting done"

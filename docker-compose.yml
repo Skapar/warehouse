@@ -1,18 +1,38 @@
+version: '3.9'
+
 services:
-
-  pg:
-    image: postgres
-    environment:
-      POSTGRES_DB: warehouse
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123
-    ports:
-      - "5433:5432"
-
-  fastapi-app:
+  warehouse-application:
     build:
-      context: .
+      context: ./
+      dockerfile: Dockerfile
+    container_name: warehouse-application
+    env_file:
+      - ./warehouse-application/.env
+    depends_on:
+      - db
+    volumes:
+      - ./warehouse-application:/app/warehouse-application
     ports:
       - "8000:8000"
-    depends_on:
-      - pg
+    networks:
+      - warehouse
+    # restart: always
+
+  db:
+    image: postgres:16
+    container_name: warehouse-application-db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - ./warehouse-application/.env
+    ports:
+      - "5433:5432"
+    networks:
+      - warehouse
+    restart: always
+
+volumes:
+  postgres_data:
+
+networks:
+  warehouse:
