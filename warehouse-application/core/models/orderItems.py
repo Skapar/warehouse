@@ -9,13 +9,14 @@ from sqlalchemy import (
 
 
 class OrderItem(Base):
+    quantity: Mapped[int] = mapped_column(Integer, nullable=False)
+
     order_id: Mapped[int] = mapped_column(
         Integer, ForeignKey("orders.id", ondelete="CASCADE")
     )
     product_id: Mapped[int] = mapped_column(
         Integer, ForeignKey("products.id", ondelete="RESTRICT")
     )
-    quantity: Mapped[int] = mapped_column(Integer, nullable=False)
 
     order: Mapped["Order"] = relationship("Order", back_populates="order_items")
     product: Mapped["Product"] = relationship("Product")

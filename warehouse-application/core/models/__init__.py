@@ -5,7 +5,7 @@ __all__ = (
     "User",
     "Product",
     "Order",
-    # "OrderItem",
+    "OrderItem",
 )
 
 from .db_helper import db_helper
@@ -14,4 +14,4 @@ from .roles import Role
 from .users import User
 from .products import Product
 from .orders import Order
-# from .orderItems import OrderItem
+from .orderItems import OrderItem
