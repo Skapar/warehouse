@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.models import db_helper
 from core.schemas.role import RoleCreate, RoleRead
-from crud.roles import create_role
+from crud import roles as roles_crud
 
 router = APIRouter(tags=["Roles"])
 
@@ -13,5 +13,5 @@ router = APIRouter(tags=["Roles"])
 async def create_role(
     role: RoleCreate, session: AsyncSession = Depends(db_helper.session_getter)
 ):
-    role = await create_role(session=session, role=role)
+    role = await roles_crud.create_role(session=session, role_create=role)
     return role

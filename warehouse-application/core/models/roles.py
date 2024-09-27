@@ -13,5 +13,5 @@ class Role(Base):
         DateTime(timezone=True), server_default=func.now()
     )
     updated_at: Mapped[DateTime] = mapped_column(
-        DateTime(timezone=True), onupdate=func.now()
+        DateTime(timezone=True), onupdate=func.now(), nullable=True,
     )

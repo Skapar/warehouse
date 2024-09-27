@@ -13,6 +13,8 @@ async def create_role(
     role_create: RoleCreate,
 ) -> Role:
     role = Role(**role_create.model_dump())
+    session.add(role)
     await session.commit()
-    await session.refresh()
+    await session.refresh(role)
+    
     return role
