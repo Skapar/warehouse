@@ -6,8 +6,8 @@ services:
       context: ./
       dockerfile: Dockerfile
     container_name: warehouse-application
-    environment:
-      DATABASE_URL: postgresql+asyncpg://postgres:123@db:5432/warehouse
+    env_file:
+      - ./warehouse-application/.env
     depends_on:
       - db
     volumes:
