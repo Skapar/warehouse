@@ -20,4 +20,4 @@ WORKDIR /app/warehouse-application
 
 EXPOSE 8000
 
-CMD ["python", "main.py"]
+CMD ["uvicorn", "main:main_app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
