@@ -2,7 +2,6 @@ from typing import Sequence, Optional
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
 
 from core.models import Product
 from core.schemas.product import (
