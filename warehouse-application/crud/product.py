@@ -11,12 +11,15 @@ from core.schemas.product import (
     ProductUpdate,
     ProductDelete,
 )
+import logging
+
+logger = logging.getLogger("uvicorn.error")
 
 
-# Create a new product
 async def create_product(
     session: AsyncSession, product_create: ProductCreate
 ) -> Product:
+    logger.info(f"Attempting to create product: {product_create}")
     new_product = Product(
         name=product_create.name,
         description=product_create.description,
@@ -26,26 +29,35 @@ async def create_product(
     session.add(new_product)
     await session.commit()
     await session.refresh(new_product)
+    logger.info(f"Product created successfully: {new_product}")
     return new_product
 
 
 async def get_all_products(session: AsyncSession) -> Sequence[Product]:
+    logger.info("Fetching all products")
     result = await session.execute(select(Product))
     products = result.scalars().all()
+    logger.info(f"Fetched {len(products)} products")
     return products
 
 
 async def get_product_by_id(
     session: AsyncSession, product_id: int
 ) -> Optional[Product]:
+    logger.info(f"Fetching product by ID: {product_id}")
     result = await session.execute(select(Product).where(Product.id == product_id))
     product = result.scalar_one_or_none()
+    if product:
+        logger.info(f"Product found: {product}")
+    else:
+        logger.warning(f"Product with ID {product_id} not found")
     return product
 
 
 async def update_product(
     session: AsyncSession, product_id: int, product_update: ProductUpdate
 ) -> Optional[Product]:
+    logger.info(f"Attempting to update product with ID: {product_id}")
     result = await session.execute(select(Product).where(Product.id == product_id))
     product = result.scalar_one_or_none()
 
@@ -61,18 +73,23 @@ async def update_product(
 
         await session.commit()
         await session.refresh(product)
+        logger.info(f"Product updated successfully: {product}")
+    else:
+        logger.warning(f"Product with ID {product_id} not found for update")
 
     return product
 
 
 async def delete_product(session: AsyncSession, product_id: int) -> bool:
-    result = await session.execute(
-        select(Product).where(Product.id == product_id).order_by(id)
-    )
+    logger.info(f"Attempting to delete product with ID: {product_id}")
+    result = await session.execute(select(Product).where(Product.id == product_id))
     product = result.scalar_one_or_none()
 
     if product:
         await session.delete(product)
         await session.commit()
+        logger.info(f"Product with ID {product_id} deleted successfully")
         return True
-    return False
+    else:
+        logger.warning(f"Product with ID {product_id} not found for deletion")
+        return False
