@@ -15,6 +15,8 @@ class ApiV1Prefix(BaseModel):
     users: str = "/users"
     roles: str = "/roles"
     products: str = "/products"
+    orders: str = "/orders"
+    orderItems: str = "/orderItems"
 
 
 
