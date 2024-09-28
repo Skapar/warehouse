@@ -1,13 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, Request
-
 from sqlalchemy.ext.asyncio import AsyncSession
-
 from core.models import db_helper
-from core.schemas.product import ProductCreate, ProductRead, ProductUpdate, ProductDelete
+from core.schemas.product import ProductCreate, ProductRead, ProductUpdate
 from crud import product as products_crud
-import logging
+from utils.logger import get_logger
 
-logger = logging.getLogger("uvicorn.error")
+logger = get_logger("products")
 
 router = APIRouter(tags=["Products"])
 
@@ -15,7 +13,7 @@ router = APIRouter(tags=["Products"])
 @router.post("", response_model=ProductRead)
 async def create_product(
     request: Request,
-    product: ProductCreate, 
+    product: ProductCreate,
     session: AsyncSession = Depends(db_helper.session_getter),
 ):
     logger.info(f"Received POST request to {request.url.path}")
